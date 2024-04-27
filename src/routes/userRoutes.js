@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/userController');
+import * as userController from '../controllers/userController.js';
+import * as authController from '../controllers/authControllers.js';
 
 router.get('/', userController.getAllUsers);
 router.post('/', userController.createUser);
@@ -8,8 +9,8 @@ router.get('/:id', userController.getById);
 router.put('/:id/:userData', userController.updateUser); 
 router.delete('/:id', userController.deleteUser); 
 
-router.post('/login', userController.authUser)
-router.post('/private', userController.privateUser)
+router.post('/login', authController.login)
+router.post('/private', authController.verificarToken, userController.autenticadedRoute)
 
-module.exports = router;
+export default router;
 

@@ -1,15 +1,11 @@
-const mongoose = require("mongoose")
+import mongoose from 'mongoose';
 
-const connectDB = async ()=> {
+export default async function connectDB() {
     try {
-        await mongoose.connect('mongodb+srv://lucas:lucas@cluster0.jb25mau.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-        
-    console.log('mongodb conectado com sucesso')
-    }
-    catch (error) {
-        console.error('conexão com o mongo db zoada: ', error.message)
-        process.exit(1)
+        mongoose.connect(process.env.MONGODB_URI);
+        console.log("Banco conectado com sucesso!");
+    } catch (error) {
+        console.log("Error: ", e.message);
     }
 }
 
-module.exports = connectDB;

@@ -1,17 +1,22 @@
-const express = require('express');
-const userRoutes = require('./src/routes/userRoutes');
-const connectDB = require('./database')
-const mongoose = require('mongoose');
-const { tokenValidated } = require('./src/autentication/auth');
-
+import express from 'express';
 const app = express();
-const port = 3001;
 
-connectDB();
+import cors from 'cors';
+app.use(cors());
+
+import { config } from 'dotenv';
+const port = process.env.PORT
+
 app.use(express.json());
-app.use('/', userRoutes);
 
-app.use('*', tokenValidated);
+import connectDB from './database.js';
+connectDB();
+
+import userRoutes from './src/routes/userRoutes.js';
+app.use('/user', userRoutes);
+
+import carRoutes from './src/routes/carRoutes.js';
+app.use('/car', carRoutes);
 
 app.listen(port, () => {
     console.log(`link: http://localhost:${port}/`);
